@@ -6,13 +6,17 @@ from pydantic import BaseModel
 from pymongo.database import Database
 from pymongo.collection import Collection
 
-ModelType = TypeVar("ModelType", bound=BaseModel)
+from models.base import BaseBaseModel
+
+ModelType = TypeVar("ModelType", bound=BaseBaseModel)
+CreateSchemaType = TypeVar("ModelType", bound=BaseModel)
 
 
-class CRUDBase:
-    def __init__(self, db: Database, collection_name):
+class CRUDBase(Generic[ModelType, CreateSchemaType]):
+    def __init__(self, db: Database, model: Type[ModelType]):
         self.db = db
-        self.collection_name = collection_name
+        self.model = model
+        self.collection_name = self.model.__collection_name__
         self._db: Collection = self.db[self.collection_name]
 
     def get_single_item(self, id: ObjectId) -> dict:
@@ -20,6 +24,5 @@ class CRUDBase:
         return query if query else None
 
     def create(self, data_dict: dict):
-        new_item_id = self._db.insert_one(data_dict)
-        print(new_item_id)
-        return new_item_id
+        new_item_id = self._db.insert_one(data_dict).inserted_id
+        return self.model(**data_dict)
