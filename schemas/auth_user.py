@@ -1,23 +1,26 @@
 from typing import List, Optional
 from datetime import date
 
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
+
+from models.base import PyObjectId
 
 
 class AuthUserCreate(BaseModel):
     username: str
-    age: int
+    email: EmailStr
+    full_name: Optional[str] = None
+    password: str
+    date_of_birth: Optional[date] = None
+    phone_number: Optional[str] = None
+    bio: Optional[str] = None
 
 
-class BookCreate(BaseModel):
-    name: str
-    author: str
-    published_date: Optional[date] = None
-    ISBN: Optional[str] = None
-    genre: Optional[List[str]] = []
-    summary: Optional[str] = None
-    language: Optional[str] = "English"
-    page_count: Optional[int] = None
-    publisher: Optional[str] = None
-    cover_image_url: Optional[str] = None
-    tags: Optional[List[str]] = []
+class AuthUserResponse(BaseModel):
+    id: PyObjectId
+    username: str
+    email: EmailStr
+    full_name: Optional[str] = None
+    date_of_birth: Optional[date] = None
+    phone_number: Optional[str] = None
+    bio: Optional[str] = None

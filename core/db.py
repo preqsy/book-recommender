@@ -1,6 +1,6 @@
 from pymongo import MongoClient
 from pymongo.errors import AutoReconnect
-from config import settings
+from core.config import settings
 import logging
 
 print(settings.DATABASE_URL)
