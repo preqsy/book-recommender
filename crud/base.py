@@ -20,9 +20,9 @@ class CRUDBase(Generic[ModelType, CreateSchemaType]):
         self.collection_name = self.model.__collection_name__
         self._db: Collection = self.db[self.collection_name]
 
-    def get_single_item(self, id: ObjectId) -> dict:
+    def get(self, id: str) -> dict:
         query = self._db.find_one({"_id": ObjectId(id)})
-        return query if query else None
+        return self.model(**query) if query else None
 
     def create(self, data_dict: dict):
         new_item_id = self._db.insert_one(data_dict).inserted_id

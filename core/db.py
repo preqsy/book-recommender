@@ -1,11 +1,5 @@
 from pymongo import MongoClient
-from pymongo.errors import AutoReconnect
-from core.config import settings
-import logging
-
-print(settings.DATABASE_URL)
-print(settings.DB_NAME)
-print(settings.COLLECTION_NAME)
+from core import settings
 
 
 def get_db():
