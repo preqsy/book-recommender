@@ -9,10 +9,11 @@ from pymongo.collection import Collection
 from models.base import BaseBaseModel
 
 ModelType = TypeVar("ModelType", bound=BaseBaseModel)
-CreateSchemaType = TypeVar("ModelType", bound=BaseModel)
+CreateSchemaType = TypeVar("CreateSchemaType", bound=BaseModel)
 
 
 class CRUDBase(Generic[ModelType, CreateSchemaType]):
+
     def __init__(self, db: Database, model: Type[ModelType]):
         self.db = db
         self.model = model

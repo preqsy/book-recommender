@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import ClassVar, Optional
 from datetime import date
 
 from pydantic import EmailStr
@@ -7,6 +7,7 @@ from models.base import BaseBaseModel
 
 class AuthUserModel(BaseBaseModel):
     __collection_name__ = "auth_users"
+    EMAIL: ClassVar[str] = "email"
 
     username: str
     email: EmailStr
