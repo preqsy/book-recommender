@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Query
 from crud import CRUDBook, get_crud_book
 from schemas import BookCreate
 
@@ -13,6 +13,15 @@ async def create_book(
     return query
 
 
-@router.get("/get-book")
-async def get_books(crud_book: CRUDBook = Depends(get_crud_book)):
-    return "query"
+@router.get("/")
+async def get_books(
+    limit: int = Query(default=100), crud_book: CRUDBook = Depends(get_crud_book)
+):
+    books = crud_book.get_multi(limit=limit)
+    return books
+
+
+@router.get("/{id}")
+async def get_books(id: str, crud_book: CRUDBook = Depends(get_crud_book)):
+    book = crud_book.get(id=id)
+    return book
