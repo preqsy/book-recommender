@@ -24,6 +24,10 @@ class CRUDBase(Generic[ModelType, CreateSchemaType]):
         query = self._db.find_one({"_id": ObjectId(id)})
         return self.model(**query) if query else None
 
+    def get_multi(self, limit: int = 100):
+        query = self._db.find(limit=limit)
+        return [self.model(**books) for books in query] if query else []
+
     def create(self, data_dict: dict):
         new_item_id = self._db.insert_one(data_dict).inserted_id
         return self.model(**data_dict)
