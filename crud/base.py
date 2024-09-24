@@ -6,6 +6,7 @@ from pydantic import BaseModel
 from pymongo.database import Database
 from pymongo.collection import Collection
 
+from core.errors import MissingResources
 from models.base import BaseBaseModel
 
 ModelType = TypeVar("ModelType", bound=BaseBaseModel)
@@ -23,6 +24,12 @@ class CRUDBase(Generic[ModelType, CreateSchemaType]):
     def get(self, id: str) -> dict:
         query = self._db.find_one({"_id": ObjectId(id)})
         return self.model(**query) if query else None
+
+    def get_or_raise_exception(self, id: str) -> dict:
+        query = self._db.find_one({"_id": ObjectId(id)})
+        if not query:
+            raise MissingResources()
+        return self.model(**query)
 
     def get_multi(self, limit: int = 100):
         query = self._db.find(limit=limit)

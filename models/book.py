@@ -6,7 +6,7 @@ from models.base import BaseBaseModel
 
 
 class BookModel(BaseBaseModel):
-    __collection_name__ = "Books"
+    __collection_name__ = "books"
     name: str
     author: str
     published_date: Optional[date] = None

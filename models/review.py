@@ -1,7 +1,8 @@
-from models.base import BaseBaseModel
+from models.base import BaseBaseModel, PyObjectId
 
 
 class ReviewModel(BaseBaseModel):
+    __collection_name__ = "reviews"
     review: str
-    user_id: str
-    book_id: str
+    user_id: PyObjectId
+    book_id: PyObjectId
