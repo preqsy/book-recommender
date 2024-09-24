@@ -4,7 +4,7 @@ from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 import jwt
 from core.config import settings
-from core.error import InvalidRequest
+from core.errors import InvalidRequest
 from crud.auth_user import CRUDAuthUser, get_crud_auth_user
 
 

@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
 
-from core.error import InvalidRequest
+from core.errors import InvalidRequest
 from core.tokens import generate_access_token, get_current_user
 from crud import get_crud_auth_user, CRUDAuthUser
 from models.auth_user import AuthUserModel
